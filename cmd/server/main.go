@@ -14,6 +14,7 @@ func main() {
 		port = ":8080"
 	}
 
+	http.HandleFunc("/", handler.Home)
 	http.HandleFunc("/upload", handler.Upload)
 	http.HandleFunc("/download", handler.Download)
 	http.HandleFunc("/list", handler.List)
