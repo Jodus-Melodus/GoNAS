@@ -14,6 +14,8 @@ func main() {
 		port = ":8080"
 	}
 
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
+
 	http.HandleFunc("/", handler.Home)
 	http.HandleFunc("/upload", handler.Upload)
 	http.HandleFunc("/download", handler.Download)
