@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"os"
 )
@@ -18,14 +18,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	data, err := os.ReadFile(PATH)
 	if err != nil {
-		fmt.Println("Error reading file: ", err)
+		log.Println("Error reading file: ", err)
 		return
 	}
 
 	w.Write(data)
-
-	// fmt.Println(r.Method)     // Type(verb)
-	// fmt.Println(r.Host)       // server ip (localhost)
-	// fmt.Println(r.RemoteAddr) // client addr
-	// fmt.Println(r.URL)        // rest of path (everything after ip and port)
 }
