@@ -1,10 +1,11 @@
 package handler
 
 import (
+	"gonas/internal/utils"
 	"log"
 	"net/http"
 	"os"
-	"strings"
+	"text/template"
 )
 
 const STORAGE = "internal/storage"
@@ -17,8 +18,6 @@ func List(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-
-	w.Header().Set("Content-Type", "text/html")
 
 	entries, err := os.ReadDir(STORAGE)
 	if err != nil {
@@ -38,10 +37,20 @@ func List(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fileStr := strings.Join(files, "\n")
-	folderStr := strings.Join(folders, "\n")
-	w.Write([]byte(fileStr))
-	w.Write([]byte(folderStr))
+	tmpl, err := template.ParseFiles("web/list.html")
+	if err != nil {
+		http.Error(w, "Template parsing error", 500)
+		return
+	}
+
+	data := utils.PageData{
+		Files: files,
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Println("Template execute error:", err)
+	}
 }
 
 func Download(w http.ResponseWriter, r *http.Request) {

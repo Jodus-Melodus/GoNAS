@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoNAS Home</title>
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="\static\style.css">
 </head>
 
 <body>
@@ -22,21 +22,15 @@
     </nav>
 
     <main>
-        <div class="card">
-            <h2>📂 File Manager</h2>
-            <p>Browse, upload, and download your files stored on GoNAS.</p>
-        </div>
-
-        <div class="card">
-            <h2>⚙ Settings</h2>
-            <p>Configure users, storage limits, and other NAS settings.</p>
-        </div>
-
-        <div class="card">
-            <h2>ℹ About</h2>
-            <p>GoNAS is a lightweight NAS server written in Go, designed for simplicity and performance.</p>
-        </div>
+        {{if .Files}}
+        {{range .Files}}
+        <div class="card">{{.}}</div>
+        {{end}}
+        {{else}}
+        <p>No files found.</p>
+        {{end}}
     </main>
+
 
     <footer>
         &copy; 2025 GoNAS — Powered by Go
