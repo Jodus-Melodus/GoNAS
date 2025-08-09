@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"gonas/internal/utils"
 	"log"
 	"net/http"
@@ -12,7 +13,39 @@ const STORAGE = "internal/storage"
 
 func Delete(w http.ResponseWriter, r *http.Request) {
 
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var request utils.DeleteRequest
+	err := json.NewDecoder(r.Body).Decode(&request)
+	if err != nil || request.Name == "" {
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
+	}
+
+	path := "internal/storage/" + request.Name
+	info, err := os.Stat(path)
+	if err != nil {
+		http.Error(w, "Failed to read file", http.StatusInternalServerError)
+		return
+	}
+
+	if info.IsDir() {
+		err = os.RemoveAll(path)
+	} else {
+		err = os.Remove(path)
+	}
+
+	if err != nil {
+		http.Error(w, "Failed to delete", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
+
 func List(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)

@@ -9,13 +9,15 @@
         {{.}}
     </div>
     <div id="button-container" class="button-container">
-        <button class="file-button" id="downloadButton" data-filename="{{.}}">Download</button>
-        <button class="file-button delete-button" id="deleteButton" data-filename="{{.}}">Delete</button>
+        <button class="file-button download-button" data-name="{{.}}">Download</button>
+        <button class="file-button delete-button" data-name="{{.}}">Delete</button>
     </div>
 </div>
 {{end}}
 {{else}}
-<p>No files found.</p>
+<div class="centered">
+    <p class="no-file-found">No files found.</p>
+</div>
 {{end}}
 
 {{if .Folders}}
@@ -25,13 +27,15 @@
         {{.}}
     </div>
     <div id="button-container" class="button-container">
-        <button class="file-button" id="downloadButton" data-filename="{{.}}">Download</button>
-        <button class="file-button delete-button" id="deleteButton" data-filename="{{.}}">Delete</button>
+        <button class="file-button download-button" data-name="{{.}}">Download</button>
+        <button class="file-button delete-button" data-name="{{.}}">Delete</button>
     </div>
 </div>
 {{end}}
 {{else}}
-<p>No folders found.</p>
+<div class="centered">
+    <p class="no-file-found">No folders found.</p>
+</div>
 {{end}}
 
 {{ end }}
