@@ -58,7 +58,7 @@ footer {
     margin-top: 2rem;
 }
 
-.file {
+.file-folder {
     display: flex;
     gap: 10px;
     padding: 0.5rem;
@@ -87,7 +87,7 @@ footer {
     color: red;
 }
 
-.file-info {
+.file-folder-info {
     display: flex;
     flex: 3;
     align-items: center;
