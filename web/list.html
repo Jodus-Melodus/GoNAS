@@ -4,7 +4,15 @@
 
 {{if .Files}}
 {{range .Files}}
-<div class="card">{{.}}</div>
+<div id="file" class="card file">
+    <div id="file-information" class="file-info">
+        {{.}}
+    </div>
+    <div id="button-container" class="button-container">
+        <button class="file-button" id="downloadButton" data-filename="{{.}}">Download</button>
+        <button class="file-button delete-button" id="deleteButton" data-filename="{{.}}">Delete</button>
+    </div>
+</div>
 {{end}}
 {{else}}
 <p>No files found.</p>
