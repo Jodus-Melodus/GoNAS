@@ -44,7 +44,8 @@ func List(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := utils.PageData{
-		Files: files,
+		Files:   files,
+		Folders: folders,
 	}
 
 	err = tmpl.Execute(w, data)

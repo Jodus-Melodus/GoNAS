@@ -1,5 +1,6 @@
 package utils
 
 type PageData struct {
-	Files []string
+	Files   []string
+	Folders []string
 }

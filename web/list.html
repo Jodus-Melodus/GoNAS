@@ -1,6 +1,7 @@
 {{ define "title" }}Files - GoNAS{{ end }}
 
 {{ define "content" }}
+
 {{if .Files}}
 {{range .Files}}
 <div class="card">{{.}}</div>
@@ -8,4 +9,13 @@
 {{else}}
 <p>No files found.</p>
 {{end}}
+
+{{if .Folders}}
+{{range .Folders}}
+<div class="card">{{.}}</div>
+{{end}}
+{{else}}
+<p>No folders found.</p>
+{{end}}
+
 {{ end }}

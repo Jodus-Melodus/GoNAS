@@ -22,7 +22,8 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := utils.PageData{
-		Files: []string{},
+		Files:   []string{},
+		Folders: []string{},
 	}
 
 	err = tmpl.Execute(w, data)
