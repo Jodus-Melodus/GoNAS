@@ -1,41 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+{{ define "title" }}Files - GoNAS{{ end }}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoNAS Home</title>
-    <link rel="stylesheet" href="\static\style.css">
-    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
-</head>
-
-<body>
-    <header>
-        <h1>Welcome to GoNAS</h1>
-        <p>Your personal Network Attached Storage</p>
-    </header>
-
-    <nav>
-        <a href="/">Home</a>
-        <a href="/list">Files</a>
-        <a href="/settings">Settings</a>
-        <a href="/about">About</a>
-    </nav>
-
-    <main>
-        {{if .Files}}
-        {{range .Files}}
-        <div class="card">{{.}}</div>
-        {{end}}
-        {{else}}
-        <p>No files found.</p>
-        {{end}}
-    </main>
-
-
-    <footer>
-        &copy; 2025 GoNAS — Powered by Go
-    </footer>
-</body>
-
-</html>
+{{ define "content" }}
+{{if .Files}}
+{{range .Files}}
+<div class="card">{{.}}</div>
+{{end}}
+{{else}}
+<p>No files found.</p>
+{{end}}
+{{ end }}

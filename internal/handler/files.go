@@ -37,7 +37,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tmpl, err := template.ParseFiles("web/list.html")
+	tmpl, err := template.ParseFiles("web/template.html", "web/list.html")
 	if err != nil {
 		http.Error(w, "Template parsing error", 500)
 		return

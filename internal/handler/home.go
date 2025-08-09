@@ -1,9 +1,10 @@
 package handler
 
 import (
+	"gonas/internal/utils"
 	"log"
 	"net/http"
-	"os"
+	"text/template"
 )
 
 const PATH = "web/home.html"
@@ -14,13 +15,18 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "text/html")
-
-	data, err := os.ReadFile(PATH)
+	tmpl, err := template.ParseFiles("web/template.html", "web/home.html")
 	if err != nil {
-		log.Println("Error reading file: ", err)
+		http.Error(w, "Template parsing error", 500)
 		return
 	}
 
-	w.Write(data)
+	data := utils.PageData{
+		Files: []string{},
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Println("Template execute error:", err)
+	}
 }
