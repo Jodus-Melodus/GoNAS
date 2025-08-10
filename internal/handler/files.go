@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"encoding/json"
 	"fmt"
 	"gonas/internal/utils"
 	"io"
@@ -15,30 +14,30 @@ import (
 const STORAGE = "internal/storage"
 
 func Delete(w http.ResponseWriter, r *http.Request) {
-
-	if r.Method != http.MethodPost {
+	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	var request utils.DeleteRequest
-	err := json.NewDecoder(r.Body).Decode(&request)
-	if err != nil || request.Name == "" {
-		http.Error(w, "Invalid request", http.StatusBadRequest)
-		return
+	path := filepath.Clean(r.URL.Query().Get("path"))
+
+	baseDir := STORAGE
+	if path != STORAGE {
+		baseDir = filepath.Join(baseDir, path)
 	}
 
-	path := STORAGE + request.Name
-	info, err := os.Stat(path)
+	fmt.Println(baseDir)
+
+	info, err := os.Stat(baseDir)
 	if err != nil {
 		http.Error(w, "Failed to read file", http.StatusInternalServerError)
 		return
 	}
 
 	if info.IsDir() {
-		err = os.RemoveAll(path)
+		err = os.RemoveAll(baseDir)
 	} else {
-		err = os.Remove(path)
+		err = os.Remove(baseDir)
 	}
 
 	if err != nil {
@@ -46,6 +45,7 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	http.Redirect(w, r, "/list", http.StatusSeeOther)
 	w.WriteHeader(http.StatusOK)
 }
 
