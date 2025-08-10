@@ -6,10 +6,10 @@
 {{range .Files}}
 <div id="file" class="card file-folder">
     <div id="file-information" class="file-folder-info">
-        {{.}}
+        {{.Name}}
     </div>
     <div id="button-container" class="button-container">
-        <a href="/download?filename={{.}}" class="file-button download-button">Download</a>
+        <a href="/download?filename={{.Path}}" class="file-button download-button">Download</a>
         <button class="file-button delete-button" data-name="{{.}}">Delete</button>
     </div>
 </div>
@@ -22,7 +22,7 @@
 
 {{if .Folders}}
 {{range .Folders}}
-<div id="folder" class="card file-folder">
+<a href="/list?directory={{.Path}}" class="card file-folder">
     <div id="folder-information" class="file-folder-info">
         {{.}}
     </div>
@@ -30,7 +30,7 @@
         <button class="file-button download-button" data-name="{{.}}">Download</button>
         <button class="file-button delete-button" data-name="{{.}}">Delete</button>
     </div>
-</div>
+</a>
 {{end}}
 {{else}}
 <div class="centered">

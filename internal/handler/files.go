@@ -28,7 +28,7 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	path := "internal/storage/" + request.Name
+	path := STORAGE + request.Name
 	info, err := os.Stat(path)
 	if err != nil {
 		http.Error(w, "Failed to read file", http.StatusInternalServerError)
@@ -55,21 +55,34 @@ func List(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	entries, err := os.ReadDir(STORAGE)
-	if err != nil {
-		log.Fatal(err)
+	directoryName := filepath.Clean(r.URL.Query().Get("directory"))
+
+	folders := []utils.DirectoryInfo{}
+	files := []utils.FileInfo{}
+	baseDir := STORAGE
+	if directoryName != STORAGE {
+		baseDir = filepath.Join(baseDir, directoryName)
 	}
 
-	folders := []string{}
-	files := []string{}
+	directories, err := os.ReadDir(baseDir)
+	if err != nil {
+		http.Error(w, "Error reading directories", http.StatusInternalServerError)
+		return
+	}
 
-	for _, entry := range entries {
-		name := entry.Name()
+	for _, entry := range directories {
+		fullPath := filepath.Join(directoryName, entry.Name())
 
 		if entry.IsDir() {
-			folders = append(folders, name)
+			folders = append(folders, utils.DirectoryInfo{
+				Name: entry.Name(),
+				Path: fullPath,
+			})
 		} else {
-			files = append(files, name)
+			files = append(files, utils.FileInfo{
+				Name: entry.Name(),
+				Path: fullPath,
+			})
 		}
 	}
 
@@ -80,11 +93,17 @@ func List(w http.ResponseWriter, r *http.Request) {
 	}
 
 	session, _ := store.Get(r, "gonas-session")
+
+	if directoryName == "" {
+		folders = nil
+	}
+
 	data := utils.PageData{
 		Authenticated: session.Values["authenticated"] == true,
 		Files:         files,
 		Folders:       folders,
 	}
+
 	err = tmpl.Execute(w, data)
 	if err != nil {
 		log.Println("Template execute error:", err)
@@ -103,7 +122,7 @@ func Download(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	safePath := filepath.Join("internal/storage", filepath.Clean(filename))
+	safePath := filepath.Join(STORAGE, filepath.Clean(filename))
 
 	file, err := os.Open(safePath)
 	if err != nil {

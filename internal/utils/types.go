@@ -2,10 +2,20 @@ package utils
 
 type PageData struct {
 	Authenticated bool
-	Files         []string
-	Folders       []string
+	Files         []FileInfo
+	Folders       []DirectoryInfo
 }
 
 type DeleteRequest struct {
 	Name string `json: name`
+}
+
+type FileInfo struct {
+	Name string
+	Path string
+}
+
+type DirectoryInfo struct {
+	Name string
+	Path string
 }

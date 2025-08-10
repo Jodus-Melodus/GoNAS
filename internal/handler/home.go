@@ -24,8 +24,8 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "gonas-session")
 	data := utils.PageData{
 		Authenticated: session.Values["authenticated"] == true,
-		Files:         []string{},
-		Folders:       []string{},
+		Files:         nil,
+		Folders:       nil,
 	}
 
 	err = tmpl.Execute(w, data)
