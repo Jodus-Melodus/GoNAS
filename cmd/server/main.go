@@ -38,6 +38,8 @@ func main() {
 	http.HandleFunc("/list", auth.AuthMiddleware(handler.List))
 	http.HandleFunc("/delete", auth.AuthMiddleware(handler.Delete))
 
+	http.HandleFunc("/about", handler.About)
+
 	log.Printf("Starting server on http://localhost%s\n", port)
 	err := http.ListenAndServe(port, nil)
 	if err != nil {

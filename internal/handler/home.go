@@ -34,3 +34,27 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		log.Println("Template execute error:", err)
 	}
 }
+
+func About(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	tmpl, err := template.ParseFiles("web/template.html", "web/about.html")
+	if err != nil {
+		http.Error(w, "Template parsing error", 500)
+		return
+	}
+	session, _ := global.Store.Get(r, "gonas-session")
+	data := utils.PageData{
+		Authenticated: session.Values["authenticated"] == true,
+		Files:         nil,
+		Folders:       nil,
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Println("Template execute error:", err)
+	}
+}
