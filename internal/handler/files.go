@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"gonas/global"
 	"gonas/internal/utils"
 	"io"
 	"log"
@@ -92,7 +93,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	session, _ := store.Get(r, "gonas-session")
+	session, _ := global.Store.Get(r, "gonas-session")
 
 	if directoryName == "" {
 		folders = nil

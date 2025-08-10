@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"gonas/global"
 	"gonas/internal/utils"
 	"log"
 	"net/http"
@@ -21,7 +22,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	session, _ := store.Get(r, "gonas-session")
+	session, _ := global.Store.Get(r, "gonas-session")
 	data := utils.PageData{
 		Authenticated: session.Values["authenticated"] == true,
 		Files:         nil,
