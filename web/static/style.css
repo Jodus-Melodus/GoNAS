@@ -94,6 +94,7 @@ footer {
     flex: 3;
     align-items: center;
     display: flex;
+    padding: 10px;
 }
 
 .button-container {
@@ -171,5 +172,7 @@ footer {
 }
 
 .folder-path {
+    color: black;
     text-decoration: none;
+    flex: 5;
 }

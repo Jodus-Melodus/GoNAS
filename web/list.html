@@ -10,7 +10,7 @@
     </div>
     <div id="button-container" class="button-container">
         <a href="/download?filename={{.Path}}" class="file-button download-button">Download</a>
-        <button class="file-button delete-button" data-name="{{.}}">Delete</button>
+        <a href="/delete?filename={{.Path}}" class="file-button delete-button">Delete</a>
     </div>
 </div>
 {{end}}
@@ -27,11 +27,11 @@
         <div id="folder-information" class="file-folder-info">
             {{.Name}}
         </div>
-        <div id="button-container" class="button-container">
-            <a href="/download?filename={{.Path}}" class="file-button download-button">Download</a>
-            <button class="file-button delete-button" data-name="{{.}}">Delete</button>
-        </div>
     </a>
+    <div id="button-container" class="button-container">
+        <a href="/download?filename={{.Path}}" class="file-button download-button">Download</a>
+        <a href="/delete?filename={{.Path}}" class="file-button delete-button">Delete</a>
+    </div>
 </div>
 {{end}}
 {{else}}
