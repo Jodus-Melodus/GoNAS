@@ -40,6 +40,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	log.Println("Helloo")
+
 	session, _ := store.Get(r, "gonas-session")
 	session.Values["authenticated"] = false
 	session.Save(r, w)

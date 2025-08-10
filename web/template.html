@@ -22,9 +22,10 @@
         <a href="/settings">Settings</a>
         <a href="/about">About</a>
         {{ if .Authenticated }}
-        <form action="/logout" method="post" style="display: inline;">
-            <button type="submit">Logout</button>
-        </form>
+        {{ if .Authenticated }}
+        <a href="#" id="logout-link">Logout</a>
+        <form id="logout-form" action="/logout" method="post" style="display:none;"></form>
+        {{ end }}
         {{ end }}
     </nav>
 
