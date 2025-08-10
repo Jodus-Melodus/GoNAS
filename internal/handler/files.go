@@ -2,10 +2,13 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"gonas/internal/utils"
+	"io"
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"text/template"
 )
 
@@ -89,7 +92,43 @@ func List(w http.ResponseWriter, r *http.Request) {
 }
 
 func Download(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
 
+	filename := r.URL.Query().Get("filename")
+	if filename == "" {
+		http.Error(w, "Missing file name", http.StatusBadRequest)
+		return
+	}
+
+	safePath := filepath.Join("internal/storage", filepath.Clean(filename))
+
+	file, err := os.Open(safePath)
+	if err != nil {
+		http.Error(w, "File not found", http.StatusNotFound)
+		return
+	}
+	defer file.Close()
+
+	f, err := file.Stat()
+	if err != nil {
+		http.Error(w, "Could not get file info", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Disposition", "attachment; filename=\""+f.Name()+"\"")
+	w.Header().Set("Content-Type", "application/octet-stream")
+	w.Header().Set("Content-Length", fmt.Sprintf("%d", f.Size()))
+
+	_, err = io.Copy(w, file)
+	if err != nil {
+		http.Error(w, "Failed to send file", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
 
 func Upload(w http.ResponseWriter, r *http.Request) {
