@@ -22,15 +22,17 @@
 
 {{if .Folders}}
 {{range .Folders}}
-<a href="/list?directory={{.Path}}" class="card file-folder">
-    <div id="folder-information" class="file-folder-info">
-        {{.}}
-    </div>
-    <div id="button-container" class="button-container">
-        <button class="file-button download-button" data-name="{{.}}">Download</button>
-        <button class="file-button delete-button" data-name="{{.}}">Delete</button>
-    </div>
-</a>
+<div id="folder" class="centered card file-folder">
+    <a href="/list?directory={{.Path}}" class="folder-path">
+        <div id="folder-information" class="file-folder-info">
+            {{.Name}}
+        </div>
+        <div id="button-container" class="button-container">
+            <a href="/download?filename={{.Path}}" class="file-button download-button">Download</a>
+            <button class="file-button delete-button" data-name="{{.}}">Delete</button>
+        </div>
+    </a>
+</div>
 {{end}}
 {{else}}
 <div class="centered">

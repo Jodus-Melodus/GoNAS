@@ -91,9 +91,9 @@ footer {
 }
 
 .file-folder-info {
-    display: flex;
     flex: 3;
     align-items: center;
+    display: flex;
 }
 
 .button-container {
@@ -170,8 +170,6 @@ footer {
     cursor: pointer;
 }
 
-.dir {
-    background-color: red;
-    flex: 1;
+.folder-path {
     text-decoration: none;
 }
