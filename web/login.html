@@ -1,0 +1,28 @@
+{{ define "title" }}Login - GoNAS{{ end }}
+
+{{ define "content" }}
+<div class="centered">
+    <div class="login-container">
+        <h1 class="login-caption">GoNAS Login</h1>
+        <div class="login-fields">
+            <form method="POST" action="/login">
+                <div class="login-form-group">
+                    <label for="username">Username</label>
+                    <input class="login-input" type="text" id="username" name="username" required
+                        autocomplete="username">
+                </div>
+
+                <div class="login-form-group">
+                    <label for="password">Password</label>
+                    <input class="login-input" type="password" id="password" name="password" required
+                        autocomplete="current-password">
+                </div>
+
+                <div class="centered">
+                    <button type="submit" class="login-btn">Log In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{ end }}

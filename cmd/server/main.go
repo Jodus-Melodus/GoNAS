@@ -16,7 +16,10 @@ func main() {
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
-	http.HandleFunc("/", handler.Home)
+	http.HandleFunc("/login", handler.Login)
+	http.HandleFunc("/logout", handler.Logout)
+	http.HandleFunc("/", handler.AuthMiddleware(handler.Home))
+
 	http.HandleFunc("/upload", handler.Upload)
 	http.HandleFunc("/download", handler.Download)
 	http.HandleFunc("/list", handler.List)

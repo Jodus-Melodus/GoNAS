@@ -1,8 +1,9 @@
 package utils
 
 type PageData struct {
-	Files   []string
-	Folders []string
+	Authenticated bool
+	Files         []string
+	Folders       []string
 }
 
 type DeleteRequest struct {

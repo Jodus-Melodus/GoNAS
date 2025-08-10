@@ -76,11 +76,12 @@ func List(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	session, _ := store.Get(r, "gonas-session")
 	data := utils.PageData{
-		Files:   files,
-		Folders: folders,
+		Authenticated: session.Values["authenticated"] == true,
+		Files:         files,
+		Folders:       folders,
 	}
-
 	err = tmpl.Execute(w, data)
 	if err != nil {
 		log.Println("Template execute error:", err)

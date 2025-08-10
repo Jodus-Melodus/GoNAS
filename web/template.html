@@ -21,6 +21,11 @@
         <a href="/list">Files</a>
         <a href="/settings">Settings</a>
         <a href="/about">About</a>
+        {{ if .Authenticated }}
+        <form action="/logout" method="post" style="display: inline;">
+            <button type="submit">Logout</button>
+        </form>
+        {{ end }}
     </nav>
 
     <main>
