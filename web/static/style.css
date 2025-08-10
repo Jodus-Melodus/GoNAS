@@ -211,3 +211,8 @@ footer {
     background-color: white;
     color: #3f51b5;
 }
+
+.file-folder-caption {
+    color: #777;
+    font-weight: bold;
+}

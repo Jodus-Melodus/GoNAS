@@ -2,23 +2,9 @@
 
 {{ define "content" }}
 
-{{if .Files}}
-{{range .Files}}
-<div id="file" class="card file-folder">
-    <div id="file-information" class="file-folder-info">
-        {{.Name}}
-    </div>
-    <div id="button-container" class="button-container centered">
-        <a href="/download?path={{.Path}}" class="file-button download-button">Download</a>
-        <a href="/delete?path={{.Path}}" class="file-button delete-button">Delete</a>
-    </div>
-</div>
-{{end}}
-{{else}}
 <div class="centered">
-    <p class="no-file-found">No files found.</p>
+    <p class="file-folder-caption">Folders</p>
 </div>
-{{end}}
 
 {{if .Folders}}
 {{range .Folders}}
@@ -39,5 +25,28 @@
     <p class="no-file-found">No folders found.</p>
 </div>
 {{end}}
+
+<div class="centered">
+    <p class="file-folder-caption">Files</p>
+</div>
+
+{{if .Files}}
+{{range .Files}}
+<div id="file" class="card file-folder">
+    <div id="file-information" class="file-folder-info">
+        {{.Name}}
+    </div>
+    <div id="button-container" class="button-container centered">
+        <a href="/download?path={{.Path}}" class="file-button download-button">Download</a>
+        <a href="/delete?path={{.Path}}" class="file-button delete-button">Delete</a>
+    </div>
+</div>
+{{end}}
+{{else}}
+<div class="centered">
+    <p class="no-file-found">No files found.</p>
+</div>
+{{end}}
+
 
 {{ end }}
