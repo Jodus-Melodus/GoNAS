@@ -1,0 +1,14 @@
+{{ define "title" }}Upload - GoNAS{{ end }}
+
+{{ define "content" }}
+<div class="centered">
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label class="custom-file-upload" for="file">Select file to upload:</label><br>
+        <input class="file-upload" type="file" id="file" name="file" required>
+        <br><span class="centered" id="file-selected">No file chosen</span><br><br>
+        <div class="centered">
+            <button type="submit" class="upload-button">Upload</button>
+        </div>
+    </form>
+</div>
+{{ end }}

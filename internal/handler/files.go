@@ -152,5 +152,37 @@ func Download(w http.ResponseWriter, r *http.Request) {
 }
 
 func Upload(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		tmpl, _ := template.ParseFiles("web/template.html", "web/upload.html")
+		tmpl.Execute(w, nil)
+		return
+	}
 
+	err := r.ParseMultipartForm(10 << 20)
+	if err != nil {
+		http.Error(w, "Failed to parse form", http.StatusBadRequest)
+		return
+	}
+
+	file, handler, err := r.FormFile("file")
+	if err != nil {
+		http.Error(w, "Failed to get file from form", http.StatusBadRequest)
+		return
+	}
+
+	destinationPath := filepath.Join(STORAGE, handler.Filename)
+	destination, err := os.Create(destinationPath)
+	if err != nil {
+		http.Error(w, "Failed to create file", http.StatusInternalServerError)
+		return
+	}
+	defer destination.Close()
+
+	_, err = io.Copy(destination, file)
+	if err != nil {
+		http.Error(w, "Failed to save file", http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
