@@ -20,10 +20,10 @@ func main() {
 	http.HandleFunc("/logout", handler.Logout)
 	http.HandleFunc("/", handler.AuthMiddleware(handler.Home))
 
-	http.HandleFunc("/upload", handler.Upload)
-	http.HandleFunc("/download", handler.Download)
-	http.HandleFunc("/list", handler.List)
-	http.HandleFunc("/delete", handler.Delete)
+	http.HandleFunc("/upload", handler.AuthMiddleware(handler.Upload))
+	http.HandleFunc("/download", handler.AuthMiddleware(handler.Download))
+	http.HandleFunc("/list", handler.AuthMiddleware(handler.List))
+	http.HandleFunc("/delete", handler.AuthMiddleware(handler.Delete))
 
 	log.Printf("Starting server on http://localhost%s\n", port)
 	err := http.ListenAndServe(port, nil)

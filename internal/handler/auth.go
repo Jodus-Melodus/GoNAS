@@ -45,8 +45,6 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Println("Helloo")
-
 	session, _ := store.Get(r, "gonas-session")
 	session.Values["authenticated"] = false
 	session.Save(r, w)
