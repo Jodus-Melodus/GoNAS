@@ -33,6 +33,11 @@
 {{if .Files}}
 {{range .Files}}
 <div id="file" class="card file-folder">
+    <div id="file-preview" class="file-preview">
+        <p>Debug: "/internal/storage/{{.Path}}"</p>
+        <img src="Untitled.png" alt="{{.Name}}-preview">
+    </div>
+
     <div id="file-information" class="file-folder-info">
         {{.Name}}
     </div>
@@ -47,6 +52,7 @@
     <p class="no-file-found">No files found.</p>
 </div>
 {{end}}
-
-
+<div>
+    <img src="internal\storage\Untitled.png" alt="test">
+</div>
 {{ end }}
